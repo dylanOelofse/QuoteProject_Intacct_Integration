@@ -1,0 +1,971 @@
+{
+    "ia::result": {
+        "id": "132",
+        "key": "132",
+        "documentNumber": "SOQ586877",
+        "documentId": "18-Sales Quotation-SOQ586877",
+        "sourceDocument": {
+            "id": null,
+            "key": null,
+            "documentType": null
+        },
+        "state": "converted",
+        "txnDate": "2025-07-01",
+        "audit": {
+            "createdDateTime": "2025-07-01T08:07:06Z",
+            "createdByUser": {
+                "key": "23",
+                "id": "UEDIS",
+                "href": "/objects/company-config/user/23"
+            },
+            "createdBy": "23",
+            "modifiedByUser": {
+                "key": "6",
+                "id": "ExtUser|Kiteview|rsultan",
+                "href": "/objects/company-config/user/6"
+            },
+            "modifiedBy": "6",
+            "modifiedDateTime": "2025-07-07T14:10:15Z"
+        },
+        "dueDate": "2025-07-10",
+        "status": "active",
+        "referenceNumber": null,
+        "documentType": "18-Sales Quotation",
+        "txnDefinition": {
+            "id": "18-Sales Quotation",
+            "key": "22",
+            "href": "/objects/order-entry/txn-definition::18-Sales%20Quotation/22"
+        },
+        "paymentTerm": {
+            "key": null,
+            "id": null
+        },
+        "notes": null,
+        "shippingMethod": {
+            "key": null,
+            "id": null
+        },
+        "contacts": {
+            "primary": {
+                "key": "33502",
+                "id": "SAC6396-FRIKKE HOLL"
+            },
+            "shipTo": {
+                "key": "33502",
+                "id": "SAC6396-FRIKKE HOLL"
+            },
+            "billTo": {
+                "key": "33502",
+                "id": "SAC6396-FRIKKE HOLL"
+            }
+        },
+        "memo": null,
+        "isPrinted": false,
+        "isBackordered": false,
+        "subtotal": "4253.56",
+        "total": "4891.60",
+        "txnCurrency": "ZAR",
+        "exchangeRate": {
+            "date": "2025-07-01",
+            "rate": "1.0000000000",
+            "typeId": null,
+            "typeName": null
+        },
+        "subtotalInTxnCurrency": "4253.56",
+        "totalInTxnCurrency": "4891.60",
+        "baseCurrency": "ZAR",
+        "isSystemGeneratedDocument": false,
+        "invoiceRun": {
+            "id": null,
+            "key": null
+        },
+        "postingDate": null,
+        "printedByUser": {
+            "key": null,
+            "id": null
+        },
+        "taxSolution": {
+            "key": "3",
+            "id": "South Africa - VAT",
+            "showMultilineTax": false,
+            "taxCalculationMethod": "VAT",
+            "href": "/objects/tax/tax-solution/3"
+        },
+        "contractID": null,
+        "contractId": null,
+        "contractDescription": null,
+        "paymentStatus": "open",
+        "invoiceDate": null,
+        "project": {
+            "key": null,
+            "id": null,
+            "name": null
+        },
+        "contract": {
+            "key": null,
+            "id": null
+        },
+        "requestedShippingDate": null,
+        "shipByDate": null,
+        "cancelAfterDate": null,
+        "doNotShipBeforeDate": null,
+        "doNotShipAfterDate": null,
+        "serviceDeliveryDate": null,
+        "trackingNumber": null,
+        "shippedDate": null,
+        "customerPONumber": "3015879012",
+        "retainagePercent": null,
+        "scope": null,
+        "inclusions": null,
+        "exclusions": null,
+        "terms": null,
+        "schedule": {
+            "scheduledStartDate": null,
+            "actualStartDate": null,
+            "scheduledCompletionDate": null,
+            "revisedCompletionDate": null,
+            "substantialCompletionDate": null,
+            "actualCompletionDate": null,
+            "noticeToProceedDate": null,
+            "responseDueDate": null,
+            "executedOnDate": null,
+            "scheduleImpactNotes": null
+        },
+        "internalReference": {
+            "referenceNumber": null,
+            "initiatedBy": {
+                "key": null,
+                "id": null,
+                "name": null
+            },
+            "verbalApprovalBy": {
+                "key": null,
+                "id": null,
+                "name": null
+            },
+            "issuedBy": {
+                "key": null,
+                "id": null,
+                "name": null
+            },
+            "issuedOnDate": null,
+            "approvedBy": {
+                "key": null,
+                "id": null,
+                "name": null
+            },
+            "approvedOnDate": null,
+            "signedBy": {
+                "key": null,
+                "id": null,
+                "name": null
+            },
+            "signedOnDate": null,
+            "source": null,
+            "sourceReferenceNumber": null
+        },
+        "externalReference": {
+            "referenceNumber": null,
+            "verbalApprovalBy": {
+                "key": null,
+                "id": null
+            },
+            "approvedBy": {
+                "key": null,
+                "id": null
+            },
+            "approvedOnDate": null,
+            "signedBy": {
+                "key": null,
+                "id": null
+            },
+            "signedOnDate": null
+        },
+        "performanceBond": {
+            "isRequired": null,
+            "isReceived": null,
+            "amount": null,
+            "vendor": {
+                "key": null,
+                "id": null,
+                "name": null
+            }
+        },
+        "paymentBond": {
+            "isRequired": null,
+            "isReceived": null,
+            "amount": null,
+            "vendor": {
+                "key": null,
+                "id": null,
+                "name": null
+            }
+        },
+        "revision": {
+            "isDocumentChanged": false,
+            "revisedTotal": null,
+            "revisedSubTotal": null,
+            "revisedTotalInTxnCurrency": null,
+            "revisedSubTotalInTxnCurrency": null,
+            "changeLogNumber": null
+        },
+        "postedChangesTotal": null,
+        "relatedDocumentNumber": null,
+        "projectContract": {
+            "key": null,
+            "id": null,
+            "name": null
+        },
+        "projectContractBilling": {
+            "externalReferenceNumber": null,
+            "description": null,
+            "contractDate": null,
+            "billingThroughDate": null,
+            "billingApplicationNumber": null
+        },
+        "architect": {
+            "key": null,
+            "id": null
+        },
+        "billingSummary": {
+            "originalContractAmount": null,
+            "netChangesAmount": null,
+            "revisedContractAmount": null,
+            "billingTotals": {
+                "completedToDateAmount": null,
+                "heldToDateAmount": null,
+                "earnedLessRetainageAmount": null,
+                "netChangesAdditionAmount": null,
+                "netChangesDeductionAmount": null,
+                "netChangesAmount": null,
+                "lessRetainageHeldAmount": "0.0000000000",
+                "heldAmount": null,
+                "retainageOnThisInvoiceAmount": null,
+                "storedMaterialsAmount": "0.0000000000"
+            },
+            "retainage": {
+                "completedAmount": null,
+                "storedMaterialsAmount": null,
+                "previousBalanceAmount": "0.0000000000",
+                "billedAmount": null,
+                "balanceAmount": null,
+                "heldAmount": "0.0000000000"
+            },
+            "lessPriorApplicationAmount": null,
+            "currentDueAmount": null,
+            "balanceToFinishAmount": null,
+            "totalChangesApprovedPriorMonth": {
+                "additionsAmount": null,
+                "deductionsAmount": null
+            },
+            "totalChangesApprovedThisMonth": {
+                "additionsAmount": null,
+                "deductionsAmount": null
+            }
+        },
+        "invoiceType": null,
+        "invoiceMode": null,
+        "eInvoiceStatus": null,
+        "downloadURL": null,
+        "webURL": "https://www.intacct.com/ia/acct/ur.phtml?.r=0RA_JKWIax-GhIqSLd3cOuH6tUDxAZKXsWCG9gtj7uk",
+        "entity": {
+            "key": "1",
+            "id": "18. EfektoCare_SA",
+            "name": "AGRO-IMP",
+            "href": "/objects/company-config/entity/1"
+        },
+        "nsp::DEPOT": "Efekto-Isando WH",
+        "nsp::DISPATCH_WAREHOUSE": "JHB Distribution Storage",
+        "nsp::SALES_REP": "E100_Corney Kuhn",
+        "nsp::SOURCE_OF_SALE": "UEDIS",
+        "nsp::PROAGRICAUPDATED": null,
+        "nsp::REPSLY_ORDER_NUMBER": null,
+        "nsp::DELIVERY_ROUTE": "VALCE001",
+        "nsp::ARCHIVING_QUOTE_REASONS": null,
+        "nsp::CLOSED_QUOTE": "No",
+        "nsp::CUSTOMER_UDFS": false,
+        "nsp::PARENT_ID": null,
+        "nsp::CUSTOMER_STATUS": null,
+        "nsp::VAT_REG_NO": null,
+        "nsp::PRICE_CHANGE_ACCESS": null,
+        "attachment": {
+            "key": null,
+            "id": null
+        },
+        "customer": {
+            "key": "8916",
+            "id": "SAC6396",
+            "name": "MASSMART RETAL PTY LTD - BUILDERS EXPRESS VEREENIGING",
+            "href": "/objects/accounts-receivable/customer/8916"
+        },
+        "invoice": {
+            "id": null,
+            "key": null
+        },
+        "projectContractBillingInvoiceSummary": {
+            "changesApprovedPriorMonth": {
+                "additionsAmount": null,
+                "deductionsAmount": null
+            },
+            "changesApprovedThisMonth": {
+                "additionsAmount": null,
+                "deductionsAmount": null
+            },
+            "retainage": {
+                "amountRetained": null,
+                "balanceToDateAmount": null,
+                "billedAmount": null,
+                "billedToDateAmount": null,
+                "heldToDateAmount": null,
+                "netChangeHeldAmount": null,
+                "previousBalanceAmount": null,
+                "totalEarnedLessAmount": null
+            },
+            "accountsReceivableInvoiceNumber": null,
+            "balanceToFinishAmount": null,
+            "chargeAmount": null,
+            "completedFromPriorApplicationAmount": null,
+            "completedToDateAmount": null,
+            "currentDueAmount": null,
+            "discountAmount": null,
+            "lessPreviousBillingAmount": null,
+            "netApprovedChangesAmount": null,
+            "orderEntryDocumentId": null,
+            "originalContractAmount": null,
+            "projectId": null,
+            "projectName": null,
+            "revisedContractAmount": null,
+            "taxAmount": null
+        },
+        "lines": [
+            {
+                "id": "7116",
+                "key": "7116",
+                "documentHeader": {
+                    "key": "132",
+                    "id": "18-Sales Quotation-SOQ586877",
+                    "documentType": "18-Sales Quotation",
+                    "href": "/objects/order-entry/document::18-Sales%20Quotation/132"
+                },
+                "documentType": "18-Sales Quotation",
+                "lineNumber": 0,
+                "dimensions": {
+                    "item": {
+                        "key": "14032",
+                        "id": "20523--HORMOBAN APM 100ML",
+                        "name": "HORMOBAN APM 100ML",
+                        "href": "/objects/inventory-control/item/14032"
+                    },
+                    "warehouse": {
+                        "id": "11ISADistStorage",
+                        "key": "58",
+                        "href": "/objects/inventory-control/warehouse/58"
+                    },
+                    "location": {
+                        "id": "18. EfektoCare_SA",
+                        "key": "1",
+                        "href": "/objects/company-config/location/1"
+                    },
+                    "department": {
+                        "id": null,
+                        "key": null
+                    },
+                    "project": {
+                        "key": null,
+                        "id": null
+                    },
+                    "task": {
+                        "key": null,
+                        "id": null
+                    }
+                },
+                "item": {
+                    "key": "14032",
+                    "id": "20523--HORMOBAN APM 100ML",
+                    "name": "HORMOBAN APM 100ML",
+                    "href": "/objects/inventory-control/item/14032"
+                },
+                "lineDescription": "HORMOBAN APM 100ML",
+                "unit": "06Pk",
+                "memo": null,
+                "priceCalculationMemo": null,
+                "quantity": "6.0000000000",
+                "quantityConverted": "6.0000000000",
+                "retailPrice": "106.0000000000",
+                "price": "106.0000000000",
+                "audit": {
+                    "modifiedDateTime": "2025-07-07T14:10:15Z",
+                    "createdDateTime": "2025-07-01T08:07:07Z",
+                    "createdByUser": {
+                        "key": "23",
+                        "id": "UEDIS",
+                        "href": "/objects/company-config/user/23"
+                    },
+                    "createdBy": "23",
+                    "modifiedByUser": {
+                        "key": "6",
+                        "id": "ExtUser|Kiteview|rsultan",
+                        "href": "/objects/company-config/user/6"
+                    },
+                    "modifiedBy": "6"
+                },
+                "status": "active",
+                "costMethod": "FIFO",
+                "unitQuantity": "1.0000000000",
+                "discountPercent": null,
+                "multiplier": 1,
+                "unitPrice": "636.0000000000",
+                "timeType": {
+                    "key": null,
+                    "id": null
+                },
+                "timesheetNotes": null,
+                "employeeExpenseType": {
+                    "key": null,
+                    "id": null
+                },
+                "sourceDocument": {
+                    "key": null,
+                    "id": "",
+                    "documentType": null
+                },
+                "sourceDocumentLine": {
+                    "key": null,
+                    "documentType": null,
+                    "id": null
+                },
+                "revenueRecognitionTemplate": {
+                    "id": null,
+                    "key": null
+                },
+                "revenueRecognitionStartDate": null,
+                "revenueRecognitionEndDate": null,
+                "isPriceProrated": null,
+                "discountMemo": null,
+                "txnCurrency": "ZAR",
+                "baseCurrency": "ZAR",
+                "priceInTxnCurrency": "636.0000000000",
+                "itemRenewalTemplate": {
+                    "id": null,
+                    "key": null
+                },
+                "enableTax": null,
+                "isBillable": null,
+                "isBilled": null,
+                "taxRate": "15.000",
+                "taxInBaseCurrency": "95.40",
+                "discount": null,
+                "taxInTxnCurrency": "95.40",
+                "conversionType": "quantity",
+                "requestedShippingDate": null,
+                "shipByDate": null,
+                "doNotShipBeforeDate": null,
+                "doNotShipAfterDate": null,
+                "pickTicketPrintedDate": null,
+                "cancelAfterDate": null,
+                "shippedDate": null,
+                "servicePeriodStartDate": null,
+                "servicePeriodEndDate": null,
+                "allowDropShip": false,
+                "allowDropship": false,
+                "allowBuyToOrder": false,
+                "buyToOrderContact": {
+                    "key": null,
+                    "id": null
+                },
+                "retainage": {
+                    "percentage": null,
+                    "baseAmountRetained": null,
+                    "txnAmountRetained": null,
+                    "previousBalanceAmount": "0.0000000000",
+                    "isReleaseLine": null,
+                    "billAmount": "0.0000000000",
+                    "balanceAmount": null,
+                    "extendedPriceNetAmount": null,
+                    "extendedBasePriceNetAmount": null
+                },
+                "relatedDocument": {
+                    "id": null,
+                    "key": null,
+                    "documentNumber": null
+                },
+                "relatedDocumentLine": {
+                    "key": null,
+                    "id": "1--20523"
+                },
+                "revision": {
+                    "unitQuantity": null,
+                    "quantity": null,
+                    "unitValue": null,
+                    "value": null,
+                    "valueInTxnCurrency": null,
+                    "price": null,
+                    "unitPrice": null,
+                    "priceInTxnCurrency": null
+                },
+                "draft": {
+                    "unitQuantity": null,
+                    "quantity": null,
+                    "price": null,
+                    "basePrice": null
+                },
+                "posted": {
+                    "quantity": null,
+                    "price": null,
+                    "basePrice": null
+                },
+                "addedByChangeDocument": false,
+                "projectContract": {
+                    "id": null,
+                    "name": null,
+                    "key": null
+                },
+                "projectContractLine": {
+                    "id": null,
+                    "name": null,
+                    "key": null
+                },
+                "projectContractBilling": {
+                    "externalReferenceNumber": null,
+                    "description": null,
+                    "billingType": null,
+                    "contractLineValue": "0.0000000000",
+                    "priorApplicationAmount": null,
+                    "completedThisPeriodAmount": "0.0000000000",
+                    "storedMaterialsAmount": null,
+                    "completedToDateAmount": "0.0000000000",
+                    "completedToDatePercent": "0.0000000000",
+                    "balanceRemaining": "0.0000000000",
+                    "isSummarized": false,
+                    "totalConvertedAmount": "636.0000000000",
+                    "totalRemainingAmount": "0.0000000000"
+                },
+                "isReverseConversion": false,
+                "reverseConversion": {
+                    "price": null,
+                    "quantity": "0.0000000000",
+                    "standardPrice": null,
+                    "standardQuantity": "6.0000000000"
+                },
+                "itemAlias": {
+                    "id": null,
+                    "key": null
+                },
+                "quantityRemaining": "0.0000000000",
+                "taxSchedule": {
+                    "key": "7",
+                    "id": "Standard Rate Output",
+                    "href": "/objects/tax/order-entry-tax-schedule/7"
+                },
+                "trackingDetail": [],
+                "lineSubtotals": [
+                    {
+                        "id": "1619",
+                        "key": "1619",
+                        "document": {
+                            "id": "132",
+                            "key": "132",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document::18-Sales%20Quotation/132"
+                        },
+                        "description": "VAT",
+                        "total": "95.40000000",
+                        "txnTotal": "95.40000000",
+                        "absoluteValue": "95.40000000",
+                        "txnAbsoluteValue": "95.40000000",
+                        "percentValue": null,
+                        "documentLine": {
+                            "id": "7116",
+                            "key": "7116",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document-line::18-Sales%20Quotation/7116"
+                        },
+                        "taxDetail": {
+                            "key": null,
+                            "id": null
+                        },
+                        "enableOverrideTax": null,
+                        "dimensions": {
+                            "location": {
+                                "key": "1",
+                                "id": "18. EfektoCare_SA",
+                                "name": "AGRO-IMP",
+                                "href": "/objects/company-config/location/1"
+                            },
+                            "department": {
+                                "key": null,
+                                "id": null,
+                                "name": null
+                            }
+                        },
+                        "systemTaxDetail": {
+                            "id": null,
+                            "key": null
+                        },
+                        "href": "/objects/order-entry/document-line-subtotal/1619"
+                    },
+                    {
+                        "id": "1625",
+                        "key": "1625",
+                        "document": {
+                            "id": "132",
+                            "key": "132",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document::18-Sales%20Quotation/132"
+                        },
+                        "description": "1) Standard Rate Output",
+                        "total": null,
+                        "txnTotal": null,
+                        "absoluteValue": "95.40000000",
+                        "txnAbsoluteValue": "95.40000000",
+                        "percentValue": "15.00000000",
+                        "documentLine": {
+                            "id": "7116",
+                            "key": "7116",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document-line::18-Sales%20Quotation/7116"
+                        },
+                        "taxDetail": {
+                            "key": "1",
+                            "id": "Standard Rate Output",
+                            "href": "/objects/tax/tax-detail/1"
+                        },
+                        "enableOverrideTax": null,
+                        "dimensions": {
+                            "location": {
+                                "key": "1",
+                                "id": "18. EfektoCare_SA",
+                                "name": "AGRO-IMP",
+                                "href": "/objects/company-config/location/1"
+                            },
+                            "department": {
+                                "key": null,
+                                "id": null,
+                                "name": null
+                            }
+                        },
+                        "systemTaxDetail": {
+                            "id": null,
+                            "key": null
+                        },
+                        "href": "/objects/order-entry/document-line-subtotal/1625"
+                    }
+                ],
+                "href": "/objects/order-entry/document-line::18-Sales%20Quotation/7116"
+            },
+            {
+                "id": "7117",
+                "key": "7117",
+                "documentHeader": {
+                    "key": "132",
+                    "id": "18-Sales Quotation-SOQ586877",
+                    "documentType": "18-Sales Quotation",
+                    "href": "/objects/order-entry/document::18-Sales%20Quotation/132"
+                },
+                "documentType": "18-Sales Quotation",
+                "lineNumber": 1,
+                "dimensions": {
+                    "item": {
+                        "key": "14034",
+                        "id": "20582--ANT 500ML",
+                        "name": "ANT 500ML",
+                        "href": "/objects/inventory-control/item/14034"
+                    },
+                    "warehouse": {
+                        "id": "11ISADistStorage",
+                        "key": "58",
+                        "href": "/objects/inventory-control/warehouse/58"
+                    },
+                    "location": {
+                        "id": "18. EfektoCare_SA",
+                        "key": "1",
+                        "href": "/objects/company-config/location/1"
+                    },
+                    "department": {
+                        "id": null,
+                        "key": null
+                    },
+                    "project": {
+                        "key": null,
+                        "id": null
+                    },
+                    "task": {
+                        "key": null,
+                        "id": null
+                    }
+                },
+                "item": {
+                    "key": "14034",
+                    "id": "20582--ANT 500ML",
+                    "name": "ANT 500ML",
+                    "href": "/objects/inventory-control/item/14034"
+                },
+                "lineDescription": "ANT 500ML",
+                "unit": "06Pk",
+                "memo": null,
+                "priceCalculationMemo": null,
+                "quantity": "6.0000000000",
+                "quantityConverted": "6.0000000000",
+                "retailPrice": "219.0000000000",
+                "price": "219.0000000000",
+                "audit": {
+                    "modifiedDateTime": "2025-07-07T14:10:15Z",
+                    "createdDateTime": "2025-07-01T08:07:07Z",
+                    "createdByUser": {
+                        "key": "23",
+                        "id": "UEDIS",
+                        "href": "/objects/company-config/user/23"
+                    },
+                    "createdBy": "23",
+                    "modifiedByUser": {
+                        "key": "6",
+                        "id": "ExtUser|Kiteview|rsultan",
+                        "href": "/objects/company-config/user/6"
+                    },
+                    "modifiedBy": "6"
+                },
+                "status": "active",
+                "costMethod": "FIFO",
+                "unitQuantity": "1.0000000000",
+                "discountPercent": null,
+                "multiplier": 1,
+                "unitPrice": "1314.0000000000",
+                "timeType": {
+                    "key": null,
+                    "id": null
+                },
+                "timesheetNotes": null,
+                "employeeExpenseType": {
+                    "key": null,
+                    "id": null
+                },
+                "sourceDocument": {
+                    "key": null,
+                    "id": "",
+                    "documentType": null
+                },
+                "sourceDocumentLine": {
+                    "key": null,
+                    "documentType": null,
+                    "id": null
+                },
+                "revenueRecognitionTemplate": {
+                    "id": null,
+                    "key": null
+                },
+                "revenueRecognitionStartDate": null,
+                "revenueRecognitionEndDate": null,
+                "isPriceProrated": null,
+                "discountMemo": null,
+                "txnCurrency": "ZAR",
+                "baseCurrency": "ZAR",
+                "priceInTxnCurrency": "1314.0000000000",
+                "itemRenewalTemplate": {
+                    "id": null,
+                    "key": null
+                },
+                "enableTax": null,
+                "isBillable": null,
+                "isBilled": null,
+                "taxRate": "15.000",
+                "taxInBaseCurrency": "197.10",
+                "discount": null,
+                "taxInTxnCurrency": "197.10",
+                "conversionType": "quantity",
+                "requestedShippingDate": null,
+                "shipByDate": null,
+                "doNotShipBeforeDate": null,
+                "doNotShipAfterDate": null,
+                "pickTicketPrintedDate": null,
+                "cancelAfterDate": null,
+                "shippedDate": null,
+                "servicePeriodStartDate": null,
+                "servicePeriodEndDate": null,
+                "allowDropShip": false,
+                "allowDropship": false,
+                "allowBuyToOrder": false,
+                "buyToOrderContact": {
+                    "key": null,
+                    "id": null
+                },
+                "retainage": {
+                    "percentage": null,
+                    "baseAmountRetained": null,
+                    "txnAmountRetained": null,
+                    "previousBalanceAmount": "0.0000000000",
+                    "isReleaseLine": null,
+                    "billAmount": "0.0000000000",
+                    "balanceAmount": null,
+                    "extendedPriceNetAmount": null,
+                    "extendedBasePriceNetAmount": null
+                },
+                "relatedDocument": {
+                    "id": null,
+                    "key": null,
+                    "documentNumber": null
+                },
+                "relatedDocumentLine": {
+                    "key": null,
+                    "id": "2--20582"
+                },
+                "revision": {
+                    "unitQuantity": null,
+                    "quantity": null,
+                    "unitValue": null,
+                    "value": null,
+                    "valueInTxnCurrency": null,
+                    "price": null,
+                    "unitPrice": null,
+                    "priceInTxnCurrency": null
+                },
+                "draft": {
+                    "unitQuantity": null,
+                    "quantity": null,
+                    "price": null,
+                    "basePrice": null
+                },
+                "posted": {
+                    "quantity": null,
+                    "price": null,
+                    "basePrice": null
+                },
+                "addedByChangeDocument": false,
+                "projectContract": {
+                    "id": null,
+                    "name": null,
+                    "key": null
+                },
+                "projectContractLine": {
+                    "id": null,
+                    "name": null,
+                    "key": null
+                },
+                "projectContractBilling": {
+                    "externalReferenceNumber": null,
+                    "description": null,
+                    "billingType": null,
+                    "contractLineValue": "0.0000000000",
+                    "priorApplicationAmount": null,
+                    "completedThisPeriodAmount": "0.0000000000",
+                    "storedMaterialsAmount": null,
+                    "completedToDateAmount": "0.0000000000",
+                    "completedToDatePercent": "0.0000000000",
+                    "balanceRemaining": "0.0000000000",
+                    "isSummarized": false,
+                    "totalConvertedAmount": "1314.0000000000",
+                    "totalRemainingAmount": "0.0000000000"
+                },
+                "isReverseConversion": false,
+                "reverseConversion": {
+                    "price": null,
+                    "quantity": "0.0000000000",
+                    "standardPrice": null,
+                    "standardQuantity": "6.0000000000"
+                },
+                "itemAlias": {
+                    "id": null,
+                    "key": null
+                },
+                "quantityRemaining": "0.0000000000",
+                "taxSchedule": {
+                    "key": "7",
+                    "id": "Standard Rate Output",
+                    "href": "/objects/tax/order-entry-tax-schedule/7"
+                },
+                "trackingDetail": [],
+                "lineSubtotals": [
+                    {
+                        "id": "1620",
+                        "key": "1620",
+                        "document": {
+                            "id": "132",
+                            "key": "132",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document::18-Sales%20Quotation/132"
+                        },
+                        "description": "VAT",
+                        "total": "197.10000000",
+                        "txnTotal": "197.10000000",
+                        "absoluteValue": "197.10000000",
+                        "txnAbsoluteValue": "197.10000000",
+                        "percentValue": null,
+                        "documentLine": {
+                            "id": "7117",
+                            "key": "7117",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document-line::18-Sales%20Quotation/7117"
+                        },
+                        "taxDetail": {
+                            "key": null,
+                            "id": null
+                        },
+                        "enableOverrideTax": null,
+                        "dimensions": {
+                            "location": {
+                                "key": "1",
+                                "id": "18. EfektoCare_SA",
+                                "name": "AGRO-IMP",
+                                "href": "/objects/company-config/location/1"
+                            },
+                            "department": {
+                                "key": null,
+                                "id": null,
+                                "name": null
+                            }
+                        },
+                        "systemTaxDetail": {
+                            "id": null,
+                            "key": null
+                        },
+                        "href": "/objects/order-entry/document-line-subtotal/1620"
+                    },
+                    {
+                        "id": "1626",
+                        "key": "1626",
+                        "document": {
+                            "id": "132",
+                            "key": "132",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document::18-Sales%20Quotation/132"
+                        },
+                        "description": "1) Standard Rate Output",
+                        "total": null,
+                        "txnTotal": null,
+                        "absoluteValue": "197.10000000",
+                        "txnAbsoluteValue": "197.10000000",
+                        "percentValue": "15.00000000",
+                        "documentLine": {
+                            "id": "7117",
+                            "key": "7117",
+                            "documentType": "18-Sales Quotation",
+                            "href": "/objects/order-entry/document-line::18-Sales%20Quotation/7117"
+                        },
+                        "taxDetail": {
+                            "key": "1",
+                            "id": "Standard Rate Output",
+                            "href": "/objects/tax/tax-detail/1"
+                        },
+                        "enableOverrideTax": null,
+                        "dimensions": {
+                            "location": {
+                                "key": "1",
+                                "id": "18. EfektoCare_SA",
+                                "name": "AGRO-IMP",
+                                "href": "/objects/company-config/location/1"
+                            },
+                            "department": {
+                                "key": null,
+                                "id": null,
+                                "name": null
+                            }
+                        },
+                        "systemTaxDetail": {
+                            "id": null,
+                            "key": null
+                        },
+                        "href": "/objects/order-entry/document-line-subtotal/1626"
+                    }
+                ],
+                "href": "/objects/order-entry/document-line::18-Sales%20Quotation/7117"
+            },
+...

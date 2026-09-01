@@ -1,0 +1,297 @@
+
+@{
+    ViewData["Title"] = "Create Quote";
+
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Create New Quote</h2>
+
+        <a class="btn btn-outline-secondary" asp-controller="Quote" asp-action="Index">
+            &larr; Back to Quotes
+        </a>
+    </div>
+
+    <!-- ===================== -->
+    <!-- Quote Header -->
+    <!-- ===================== -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Quote Header
+        </div>
+
+        <div class="card-body">
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Customer <span class="text-danger">*</span></label>
+                    <select id="customerId" class="form-select"></select>
+                    <div class="form-text" id="lookupStatus">Loading customers and items&hellip;</div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Address</label>
+                    <input id="address" class="form-control bg-body-secondary" readonly />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Quote Date <span class="text-danger">*</span></label>
+                    <input id="transactionDate" type="date" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Due Date</label>
+                    <input id="dueDate" type="date" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Invoice Date</label>
+                    <input id="invoiceDate" type="date" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">External Order #</label>
+                    <input id="referenceNumber" class="form-control" placeholder="e.g. POHZA1502402145" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">State</label>
+                    <input id="state" class="form-control bg-body-secondary" value="Pending" readonly />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- Quote Lines -->
+    <!-- ===================== -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>Quote Lines <span class="text-danger">*</span></span>
+
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="addLine()">
+                + Add Line
+            </button>
+        </div>
+
+        <div class="card-body p-0">
+
+            <div id="linesLoading" class="p-3 text-muted">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Loading items&hellip;
+            </div>
+
+            <table class="table table-bordered mb-0 d-none" id="linesTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Item <span class="text-danger">*</span></th>
+                        <th style="width: 130px;">Unit <span class="text-danger">*</span></th>
+                        <th style="width: 130px;">Qty on Hand</th>
+                        <th style="width: 130px;">Quantity <span class="text-danger">*</span></th>
+                        <th style="width: 130px;">Discount</th>
+                        <th style="width: 90px;"></th>
+                    </tr>
+                </thead>
+
+                <tbody id="linesBody">
+                    <!-- line rows injected by addLine() -->
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="card-footer text-muted">
+            Sage Intacct requires at least one line on every Order Entry document.
+            Location/Warehouse can be left blank unless your company setup requires them.
+        </div>
+    </div>
+
+    <button class="btn btn-primary btn-lg" id="createBtn" onclick="createQuote()">
+        Create Quote in Sage
+    </button>
+
+</div>
+
+@section Scripts {
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+    const UNITS = ["Pack", "01Pk", "02Pk", "06Pk"];
+
+    let customers = [];
+    let items = [];
+    let itemOptions = [];
+
+    $(document).ready(function () {
+        document.getElementById("transactionDate").value = new Date().toISOString().split("T")[0];
+        loadLookups();
+    });
+
+    function loadLookups() {
+        fetch("/Lookup")
+            .then(async res => {
+                if (!res.ok) throw new Error(await res.text());
+                return res.json();
+            })
+            .then(data => {
+                customers = data.customers;
+                items = data.items;
+
+                itemOptions = items.map(i => ({ id: i.id, text: `${i.id} - ${i.name ?? ""}` }));
+
+                $("#customerId").select2({
+                    theme: "bootstrap-5",
+                    placeholder: "Search for a customer",
+                    data: customers.map(c => ({ id: c.id, text: `${c.id} - ${c.name ?? ""}` }))
+                });
+
+                $("#customerId").val(null).trigger("change");
+
+                $("#customerId").on("change", function () {
+                    const selected = customers.find(c => c.id === this.value);
+                    document.getElementById("address").value = selected?.address ?? "";
+                });
+
+                document.getElementById("lookupStatus").textContent =
+                    `${customers.length} customers, ${items.length} items`;
+
+                document.getElementById("linesLoading").classList.add("d-none");
+                document.getElementById("linesTable").classList.remove("d-none");
+
+                addLine();
+            })
+            .catch(err => {
+                document.getElementById("lookupStatus").textContent = "Could not load customers and items.";
+                document.getElementById("linesLoading").textContent = err.message;
+            });
+    }
+
+    function addLine() {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td><select class="form-select itemId"></select></td>
+            <td>
+                <select class="form-select unit">
+                    ${UNITS.map(u => `<option value="${u}">${u}</option>`).join("")}
+                </select>
+            </td>
+            <td><input class="form-control bg-body-secondary quantityOnHand" readonly /></td>
+            <td><input class="form-control quantity" type="number" min="0" step="0.01" value="1" /></td>
+            <td><input class="form-control discountPercent" type="number" min="0" step="0.01" value="0" /></td>
+            <td class="text-center">
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeLine(this)">
+                    Remove
+                </button>
+            </td>`;
+
+        document.getElementById("linesBody").appendChild(row);
+
+        $(row).find(".itemId").select2({
+            theme: "bootstrap-5",
+            placeholder: "Search for an item",
+            data: itemOptions,
+            width: "100%"
+        }).val(null).trigger("change");
+
+        $(row).find(".itemId").on("change", function () {
+            const selected = items.find(i => i.id === this.value);
+            const onHand = selected?.quantityOnHand ?? 0;
+
+            row.querySelector(".quantityOnHand").value = selected ? onHand.toFixed(2) : "";
+            row.querySelector(".quantity").max = onHand;
+        });
+    }
+
+    function removeLine(btn) {
+        const body = document.getElementById("linesBody");
+
+        // Always keep at least one line row on screen.
+        if (body.rows.length <= 1) {
+            alert("A quote needs at least one line.");
+            return;
+        }
+
+        btn.closest("tr").remove();
+    }
+
+    function collectLines() {
+        const lines = [];
+
+        document.querySelectorAll("#linesBody tr").forEach(row => {
+            lines.push({
+                itemId: (row.querySelector(".itemId").value ?? "").trim(),
+                unit: row.querySelector(".unit").value.trim(),
+                quantity: parseFloat(row.querySelector(".quantity").value),
+                quantityOnHand: parseFloat(row.querySelector(".quantityOnHand").value) || 0,
+                discountPercent: parseFloat(row.querySelector(".discountPercent").value) || 0
+            });
+        });
+
+        return lines;
+    }
+
+    function createQuote() {
+
+        const quote = {
+            customerId: (document.getElementById("customerId").value ?? "").trim(),
+            transactionDate: document.getElementById("transactionDate").value || null,
+            dueDate: document.getElementById("dueDate").value || null,
+            invoiceDate: document.getElementById("invoiceDate").value || null,
+            externalOrderNumber: document.getElementById("referenceNumber").value.trim() || null,
+            state: "pending",
+            lines: collectLines()
+        };
+
+        // Client-side sanity checks (the service validates again on the server).
+        if (!quote.customerId) { alert("Customer ID is required."); return; }
+        if (!quote.transactionDate) { alert("Quote date is required."); return; }
+
+        for (const line of quote.lines) {
+            if (!line.itemId) { alert("Every line needs an Item."); return; }
+            if (!line.unit) { alert("Every line needs a Unit, e.g. 06Pk."); return; }
+            if (!line.quantity || line.quantity <= 0) { alert("Every line needs a quantity greater than 0."); return; }
+
+            if (line.quantity > line.quantityOnHand) {
+                alert(`Item ${line.itemId} has only ${line.quantityOnHand} on hand - reduce the quantity to ${line.quantityOnHand} or less.`);
+                return;
+            }
+        }
+
+        const btn = document.getElementById("createBtn");
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating in Sage...';
+
+        fetch("/Quote", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(quote)
+        })
+        .then(async res => {
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(`Create failed (${res.status}): ${msg}`);
+            }
+
+            alert("Quote created successfully in Sage Intacct.");
+            window.location.href = "/Quote";
+        })
+        .catch(err => {
+            alert(err.message);
+            btn.disabled = false;
+            btn.textContent = "Create Quote in Sage";
+        });
+    }
+
+</script>
+}

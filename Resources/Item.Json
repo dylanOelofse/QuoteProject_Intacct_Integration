@@ -1,0 +1,337 @@
+{
+    "ia::result": {
+        "key": "13635",
+        "id": "35433",
+        "status": "active",
+        "isItemEnabledForMRR": false,
+        "name": "EFEKTO RAT & MOUSE PELLETS 100 G SACHET",
+        "extendedDescription": "EFEKTO RAT & MOUSE PELLETS 100 G SACHET",
+        "poDescription": null,
+        "soDescription": null,
+        "isSuppliesItem": false,
+        "productLine": {
+            "id": "RODENTICIDES",
+            "key": "17",
+            "href": "/objects/inventory-control/product-line/17"
+        },
+        "contractDefault": {
+            "billingTemplate": {
+                "key": null,
+                "id": null
+            },
+            "revRecTemplate1": {
+                "key": null,
+                "id": null
+            },
+            "revRecTemplate2": {
+                "key": null,
+                "id": null
+            },
+            "expenseTemplate1": {
+                "key": null,
+                "id": null
+            },
+            "expenseTemplate2": {
+                "key": null,
+                "id": null
+            },
+            "isDefaultBundle": false,
+            "contractFairValueCategory": {
+                "key": null,
+                "id": null
+            },
+            "defaultContractDeliveryStatus": "delivered",
+            "defaultContractDeferralStatus": "deferRevenueUntilItemIsDelivered"
+        },
+        "substituteItemId": null,
+        "inventory": {
+            "shippingWeight": null,
+            "glGroup": {
+                "incomeGLAccount": null,
+                "expenseGLAccount": null,
+                "inventoryGLAccount": null,
+                "cogsGLAccount": null,
+                "arGLAccountNumber": null,
+                "apGLAccountNumber": null,
+                "deferredRevenueGLAccountNumber": null,
+                "defaultRevenueRecognitionTemplate": null,
+                "id": "RODENTICIDES",
+                "key": "128",
+                "href": "/objects/inventory-control/item-gl-group/128"
+            },
+            "autoPrintLabel": false
+        },
+        "dateLastSold": null,
+        "dateLastReceived": null,
+        "sales": {
+            "isTaxable": true,
+            "taxGroup": {
+                "id": null,
+                "key": null
+            },
+            "taxSolution": {
+                "id": null,
+                "key": null
+            },
+            "taxCode": null,
+            "isAvailableForDropShip": false,
+            "isAvailableForBuyToOrder": false,
+            "basePrice": "0.0000000000",
+            "allowMultipleTaxGroups": true
+        },
+        "costMethod": "standard",
+        "defaultConversionType": "quantity",
+        "purchasing": {
+            "standardCost": null
+        },
+        "unitOfMeasureGroup": {
+            "id": "Pack",
+            "key": "7",
+            "href": "/objects/inventory-control/unit-of-measure-group/7"
+        },
+        "notes": null,
+        "precision": {
+            "inventoryPrecision": 6,
+            "purchasingPrecision": 6,
+            "salesPrecision": 6,
+            "upc": null
+        },
+        "itemType": "inventory",
+        "tracking": {
+            "enableSerialNo": null,
+            "serialMask": null,
+            "enableLotCategory": null,
+            "lotCategory": null,
+            "enableBins": null,
+            "enableExpiration": null
+        },
+        "kitRevenuePosting": null,
+        "kitRevenuePrinting": "kit",
+        "vsoeCategory": "productSpecified",
+        "vsoeDefaultDeliveryStatus": "delivered",
+        "vsoeDefaultDeferralStatus": "deferUntilItemIsDelivered",
+        "contractTerm": {
+            "isStartDateAndEndDateEnabled": false,
+            "periodsMeasuredIn": null,
+            "numberOfPeriods": null,
+            "isProratedPricingAllowed": false,
+            "defaultRenewalTemplate": {
+                "id": null,
+                "key": null
+            }
+        },
+        "landedCost": {
+            "enableLandedCost": false
+        },
+        "audit": {
+            "createdDateTime": "2025-06-17T13:16:18Z",
+            "modifiedDateTime": "2026-01-13T11:14:41Z",
+            "createdByUser": {
+                "key": "9",
+                "id": "ExtUser|Kiteview|fsultan",
+                "href": "/objects/company-config/user/9"
+            },
+            "createdBy": "9",
+            "modifiedByUser": {
+                "key": "7",
+                "id": "ExtUser|Kiteview|tkawal",
+                "href": "/objects/company-config/user/7"
+            },
+            "modifiedBy": "7"
+        },
+        "quantityOnOrder": null,
+        "quantityOnHand": null,
+        "quantityOnHold": null,
+        "quantityAllocated": null,
+        "quantityReserved": null,
+        "quantityUncommitted": "0",
+        "quantityInTransit": null,
+        "replenishment": {
+            "enableReplenishment": true,
+            "replenishmentMethod": "reorderPoint",
+            "unitOfMeasureDefault": null,
+            "reorderPoint": null,
+            "safetyStock": null,
+            "reorderQuantity": 1,
+            "maximumOrderQuantity": 0
+        },
+        "measurements": {
+            "weightUnitOfMeasure": {
+                "id": null,
+                "key": null
+            },
+            "netWeight": null,
+            "lengthWidthHeightUnitOfMeasure": {
+                "id": null,
+                "key": null
+            },
+            "length": null,
+            "width": null,
+            "height": null,
+            "thicknessUnitOfMeasure": {
+                "id": null,
+                "key": null
+            },
+            "thickness": null,
+            "minimumThickness": null,
+            "maximumThickness": null,
+            "areaUnitOfMeasure": {
+                "id": null,
+                "key": null
+            },
+            "area": null,
+            "volumeUnitOfMeasure": {
+                "id": null,
+                "key": null
+            },
+            "volume": null,
+            "diameterUnitOfMeasure": {
+                "id": null,
+                "key": null
+            },
+            "innerDiameter": null,
+            "outerDiameter": null,
+            "durometerUnitOfMeasure": null,
+            "densityUnitOfMeasure": null,
+            "density": null
+        },
+        "itemDetails": {
+            "universalProductCode": null,
+            "internationalArticleNumber": null,
+            "isSafetyItem": false,
+            "isRestrictedItem": false,
+            "isCompliantItem": false,
+            "condition": null,
+            "engineeringAlert": null,
+            "specification1": null,
+            "specification2": null,
+            "specification3": null,
+            "isApprovedByEngineering": false,
+            "isApprovedByQualityControl": false,
+            "isApprovedBySales": false,
+            "primaryCountryOfOrigin": null
+        },
+        "commercial": {
+            "brand": "EFEKTO",
+            "subBrand": null,
+            "category": "RODENTICIDES",
+            "subCategory": null,
+            "catalogReference": null,
+            "color": null,
+            "style": null,
+            "size1": null,
+            "size2": null,
+            "isGiftCard": false,
+            "isWebEnabled": false,
+            "webName": null,
+            "webShortDiscription": null,
+            "webLongDescription": null
+        },
+        "enableFulfillment": null,
+        "isEnabledForContracts": null,
+        "attachment": {
+            "key": null,
+            "id": null
+        },
+        "entity": {
+            "key": null,
+            "id": null,
+            "name": null
+        },
+        "nsp::REPORTCATEGORY": "RODENTICIDES",
+        "nsp::CASE_BARCODE": "16001379300389",
+        "nsp::SALESCATEGORY": "RODENTICIDES",
+        "nsp::DESCRIPTION_3": "6001379300382",
+        "nsp::UNIT_BARCODE": "6001379300382",
+        "nsp::ROLL_UP_CODE": "0",
+        "nsp::PACK_PER_DAY": "0",
+        "nsp::STOCKING_UNIT": "20Pk",
+        "nsp::DEFAULT_SELLING_UNIT": null,
+        "nsp::DESCRIPTION_2": null,
+        "nsp::ITEM_WEIGHT": "0",
+        "nsp::ITEM_LENGTH": "0",
+        "nsp::ITEM_WIDTH": "0",
+        "nsp::ITEM_HEIGHT": "0",
+        "nsp::GL_COST_ACCOUNT": null,
+        "nsp::TAX_INFORMATION_IS_COMPLETE": false,
+        "nsp::ITEM_STATUS": "Active",
+        "nsp::SAMPLE_STOCK": false,
+        "nsp::LEAD_TIME": null,
+        "nsp::PRODUCTION_TYPE": null,
+        "nsp::WEIGHT": null,
+        "nsp::PRODUCT_TIER": null,
+        "itemVendor": [],
+        "warehouseInfo": [],
+        "kitComponents": [],
+        "itemLandedCost": [],
+        "itemTaxMap": [
+            {
+                "id": "66758",
+                "key": "66758",
+                "item": {
+                    "id": "35433",
+                    "key": "13635",
+                    "href": "/objects/inventory-control/item/13635"
+                },
+                "taxGroup": {
+                    "id": "Standard Rate",
+                    "key": "14",
+                    "href": "/objects/tax/item-tax-group/14"
+                },
+                "taxSolution": {
+                    "id": "South Africa - VAT",
+                    "key": "3",
+                    "href": "/objects/tax/tax-solution/3"
+                },
+                "href": "/objects/tax/item-tax-group-item-map/66758"
+            },
+            {
+                "id": "67833",
+                "key": "67833",
+                "item": {
+                    "id": "35433",
+                    "key": "13635",
+                    "href": "/objects/inventory-control/item/13635"
+                },
+                "taxGroup": {
+                    "id": "Standard Rate Namibia",
+                    "key": "35",
+                    "href": "/objects/tax/item-tax-group/35"
+                },
+                "taxSolution": {
+                    "id": "Namibia - VAT",
+                    "key": "4",
+                    "href": "/objects/tax/tax-solution/4"
+                },
+                "href": "/objects/tax/item-tax-group-item-map/67833"
+            },
+            {
+                "id": "69138",
+                "key": "69138",
+                "item": {
+                    "id": "35433",
+                    "key": "13635",
+                    "href": "/objects/inventory-control/item/13635"
+                },
+                "taxGroup": {
+                    "id": "Standard Rate - Homelife",
+                    "key": "39",
+                    "href": "/objects/tax/item-tax-group/39"
+                },
+                "taxSolution": {
+                    "id": "South African VAT _ Homelife",
+                    "key": "5",
+                    "href": "/objects/tax/tax-solution/5"
+                },
+                "href": "/objects/tax/item-tax-group-item-map/69138"
+            }
+        ],
+        "itemCrossReference": [],
+        "href": "/objects/inventory-control/item/13635"
+    },
+    "ia::meta": {
+        "totalCount": 1,
+        "totalSuccess": 1,
+        "totalError": 0
+    }
+}

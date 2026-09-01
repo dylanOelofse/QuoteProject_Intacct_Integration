@@ -1,0 +1,22 @@
+{
+  "object": "order-entry/price-list-entry",
+  "fields": [
+    "key",
+    "id",
+    "item.name",
+    "value"
+  ],
+  "filters": [
+    { "$eq": { "status": "active" } },
+    { "$eq": { "priceList.key": "649" } }
+  ],
+  "filterParameters": {
+    "caseSensitiveComparison": true,
+    "includePrivate": true
+  },
+  "orderBy": [
+    {"key": "desc"}
+  ],
+  "size": 4000,
+  "start": 1
+}

@@ -1,0 +1,334 @@
+{
+    "ia::result": {
+        "key": "334",
+        "id": "SAC2029",
+        "name": "COD - MONAVONI KWEKERY",
+        "parent": {
+            "key": null,
+            "id": null,
+            "name": null
+        },
+        "contacts": {
+            "default": {
+                "electronicInvoiceDetails": {
+                    "legalCategory": null,
+                    "mainActivity": null,
+                    "registeredCapital": null,
+                    "typeOfCompany": null,
+                    "valueAddedTaxRegime": null
+                },
+                "mailingAddress": {
+                    "addressLine1": "PLOT 75 TULIP ROAD",
+                    "addressLine2": "MONAVONI AH",
+                    "addressLine3": null,
+                    "city": "CENTURION",
+                    "country": "South Africa",
+                    "isoCountryCode": "ZA",
+                    "postCode": "157",
+                    "state": null
+                },
+                "tax": {
+                    "group": {
+                        "id": "Local Customers",
+                        "key": "3",
+                        "href": "/objects/tax/contact-tax-group/3"
+                    },
+                    "solution": {
+                        "id": "South Africa - VAT",
+                        "key": "3",
+                        "href": "/objects/tax/tax-solution/3"
+                    },
+                    "isTaxable": true
+                },
+                "URL1": null,
+                "URL2": null,
+                "companyName": "COD - MONAVONI KWEKERY",
+                "email1": "marisane@monavoninursery.co.za",
+                "email2": null,
+                "fax": null,
+                "firstName": "Marisane",
+                "id": "SAC2029-MONAVONI KWEKERY",
+                "internationalTaxId": null,
+                "lastName": null,
+                "middleName": null,
+                "mobile": null,
+                "pager": null,
+                "phone1": "012 668 1261",
+                "phone2": null,
+                "prefix": null,
+                "printAs": "COD - MONAVONI KWEKERY",
+                "showInContactList": true,
+                "key": "4396",
+                "href": "/objects/company-config/contact/4396"
+            },
+            "primary": {
+                "id": null,
+                "key": null
+            },
+            "shipTo": {
+                "id": null,
+                "key": null
+            },
+            "billTo": {
+                "id": null,
+                "key": null
+            }
+        },
+        "term": {
+            "id": "Current",
+            "key": "1",
+            "href": "/objects/accounts-receivable/term/1"
+        },
+        "salesRepresentative": {
+            "id": "E043",
+            "name": "E043_Matjiane Maria",
+            "key": "1840",
+            "href": "/objects/company-config/employee/1840"
+        },
+        "customerResaleNumber": null,
+        "resaleNumber": null,
+        "taxId": null,
+        "creditLimit": 0,
+        "totalDue": "0.00",
+        "notes": null,
+        "accountLabel": {
+            "id": null,
+            "key": null
+        },
+        "defaultRevenueGLAccount": {
+            "id": null,
+            "name": null,
+            "key": null
+        },
+        "lastInvoiceCreatedDate": "2025-08-18",
+        "lastStatementGeneratedDate": "2026-02-28",
+        "deliveryOptions": "print",
+        "territory": {
+            "id": "Gauteng",
+            "name": "Gauteng",
+            "key": "Gauteng",
+            "href": "/objects/accounts-receivable/territory/Gauteng"
+        },
+        "shippingMethod": {
+            "id": null,
+            "key": null
+        },
+        "customerType": {
+            "id": "NURS01",
+            "key": "106",
+            "href": "/objects/accounts-receivable/customer-type/106"
+        },
+        "accountGroup": {
+            "key": null,
+            "id": null
+        },
+        "priceSchedule": {
+            "id": null,
+            "key": null
+        },
+        "discountPercent": null,
+        "priceList": {
+            "id": "SA Trade Main - Oct 2025",
+            "key": "767",
+            "href": "/objects/order-entry/price-list/767"
+        },
+        "currency": null,
+        "status": "active",
+        "isOneTimeUse": false,
+        "customerMessage": {
+            "key": null,
+            "id": null,
+            "message": null
+        },
+        "isOnHold": true,
+        "overridePriceList": "customer",
+        "enableOnlineCardPayment": true,
+        "enableOnlineACHPayment": true,
+        "audit": {
+            "modifiedDateTime": "2026-05-15T08:28:40Z",
+            "createdDateTime": "2025-04-11T12:57:40Z",
+            "createdByUser": {
+                "key": "4",
+                "id": "ExtUser|Kiteview|mkinga",
+                "href": "/objects/company-config/user/4"
+            },
+            "createdBy": "4",
+            "modifiedByUser": {
+                "key": "70",
+                "id": "sdlodlo",
+                "href": "/objects/company-config/user/70"
+            },
+            "modifiedBy": "70"
+        },
+        "overrideOffsetGLAccount": {
+            "key": null,
+            "id": null,
+            "name": null
+        },
+        "advanceBillBy": null,
+        "advanceBillByType": "",
+        "attachment": {
+            "id": null,
+            "key": null
+        },
+        "retainagePercentage": null,
+        "emailOptIn": false,
+        "activationDate": null,
+        "subscriptionEndDate": null,
+        "customerAccountHealth": {
+            "healthScore": null,
+            "healthStatus": "healthy",
+            "churnRisk": false
+        },
+        "disableRefund": false,
+        "vendor": {
+            "key": null,
+            "id": null,
+            "isSystemGenerated": null
+        },
+        "webURL": "https://www.intacct.com/ia/acct/ur.phtml?.r=H5ScPYPxixHQetI1GFi-7pQ5idbdK31o4XGFcnocOkM",
+        "entity": {
+            "key": "1",
+            "id": "18. EfektoCare_SA",
+            "name": "AGRO-IMP",
+            "href": "/objects/company-config/entity/1"
+        },
+        "nsp::ACCDESCRIPTION": null,
+        "nsp::B2B": "No",
+        "nsp::ACCOUNTSTATUS": "Active",
+        "nsp::CHANNEL": "NURSERIES",
+        "nsp::CREDITCONTROLLER": "Sandile D",
+        "nsp::CUSTOMER_GROUP": "Nurse",
+        "nsp::DELIVERY_ROUTE": "PTASS001",
+        "nsp::DISCOUNT_SCHEME": "Unspecified",
+        "nsp::EDI": "WMB",
+        "nsp::FW_ACCOUNT": "1",
+        "nsp::PAYMENT_TERMS": "C.O.D",
+        "nsp::RSM": "Nappie Ries",
+        "nsp::SALES_REGION": "Morne van Vuuren",
+        "nsp::SELLING_GROUP": "Nurseries",
+        "nsp::STORE_CODE": "0",
+        "nsp::TRADE_MARKETER_1": "Khotso Baloyi",
+        "nsp::TRADE_MARKETER_2": "Ramollo Phetole",
+        "nsp::TRADE_MARKETER_3": "Johan Nel",
+        "nsp::TRADE_MARKETER_4": "Vusi Mkwanazi",
+        "nsp::EVO_CODE": "74037001",
+        "nsp::ORGANISATION": "Efekto-Isando WH",
+        "nsp::KAM": "Nappie Ries",
+        "nsp::POST1": "Plot 75 Tulip Road",
+        "nsp::BRANCHCODE": null,
+        "nsp::POST2": "Monavani",
+        "nsp::POST3": "CENTURION",
+        "nsp::POST4": null,
+        "nsp::POST5": null,
+        "nsp::DELIVERED_TO": "lebo Kgwereme",
+        "nsp::FAX2": null,
+        "nsp::REGISTRATION": null,
+        "nsp::IDNUMBER": null,
+        "nsp::PASSPORTNUMBER": null,
+        "nsp::BANKACCNUM": null,
+        "nsp::BANKACCTYPE": null,
+        "nsp::CBANKREFNR": null,
+        "nsp::GL_GROUP_DESCRIPTION": null,
+        "nsp::DISPATCH_WAREHOUSE": "JHB Distribution Storage",
+        "nsp::MERCHANDISING_COMMISSION": null,
+        "nsp::B2B_LOGIN_EMAIL": null,
+        "contactList": [
+            {
+                "id": "4844",
+                "key": "4844",
+                "categoryName": "BILLING ADDRESS",
+                "contact": {
+                    "id": "SAC2029-COD - MONAVONI KWEKERY",
+                    "key": "51089",
+                    "href": "/objects/company-config/contact/51089"
+                },
+                "audit": {
+                    "modifiedDateTime": "2026-05-15T08:28:40Z",
+                    "createdDateTime": "2025-04-11T12:57:40Z",
+                    "createdByUser": {
+                        "key": "4",
+                        "id": "ExtUser|Kiteview|mkinga",
+                        "href": "/objects/company-config/user/4"
+                    },
+                    "createdBy": "4",
+                    "modifiedByUser": {
+                        "key": "70",
+                        "id": "sdlodlo",
+                        "href": "/objects/company-config/user/70"
+                    },
+                    "modifiedBy": "70"
+                },
+                "customer": {
+                    "key": "334",
+                    "id": "SAC2029",
+                    "href": "/objects/accounts-receivable/customer/334"
+                },
+                "href": "/objects/accounts-receivable/customer-contact/4844"
+            },
+            {
+                "id": "4845",
+                "key": "4845",
+                "categoryName": "SHIPPING ADDRESS",
+                "contact": {
+                    "id": "SAC2029-COD - MONAVONI KWEKERY",
+                    "key": "51089",
+                    "href": "/objects/company-config/contact/51089"
+                },
+                "audit": {
+                    "modifiedDateTime": "2026-05-15T08:28:40Z",
+                    "createdDateTime": "2025-04-11T12:57:40Z",
+                    "createdByUser": {
+                        "key": "4",
+                        "id": "ExtUser|Kiteview|mkinga",
+                        "href": "/objects/company-config/user/4"
+                    },
+                    "createdBy": "4",
+                    "modifiedByUser": {
+                        "key": "70",
+                        "id": "sdlodlo",
+                        "href": "/objects/company-config/user/70"
+                    },
+                    "modifiedBy": "70"
+                },
+                "customer": {
+                    "key": "334",
+                    "id": "SAC2029",
+                    "href": "/objects/accounts-receivable/customer/334"
+                },
+                "href": "/objects/accounts-receivable/customer-contact/4845"
+            }
+        ],
+        "customerEmailTemplates": [
+            {
+                "id": "7017",
+                "key": "7017",
+                "customer": {
+                    "key": "334",
+                    "id": "SAC2029",
+                    "href": "/objects/accounts-receivable/customer/334"
+                },
+                "txnDefinitionName": null,
+                "txnDefinition": {
+                    "id": null
+                },
+                "emailTemplate": {
+                    "id": "1",
+                    "key": "1",
+                    "name": "Agro-Serve (Pty) Ltd",
+                    "templateType": "arInvoice",
+                    "href": "/objects/company-config/email-template/1"
+                },
+                "href": "/objects/accounts-receivable/customer-email-template/7017"
+            }
+        ],
+        "restrictedLocations": [],
+        "restrictedDepartments": [],
+        "href": "/objects/accounts-receivable/customer/334"
+    },
+    "ia::meta": {
+        "totalCount": 1,
+        "totalSuccess": 1,
+        "totalError": 0
+    }
+}

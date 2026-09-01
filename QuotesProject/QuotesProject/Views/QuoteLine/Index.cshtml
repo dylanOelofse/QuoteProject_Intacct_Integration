@@ -1,0 +1,326 @@
+@model QuoteLineViewModel
+@using System.Globalization
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Quote Lines";
+
+    var vatRate = Configuration["VatRate"] ?? throw new InvalidOperationException("VatRate is not configured.");
+
+    var units = new[] { "Pack", "01Pk", "02Pk", "06Pk" };
+}
+
+<div class="container-fluid mt-4">
+
+    <input type="hidden" id="quoteKey" value="@Model.quoteOpened.Key" />
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Quote @Model.quoteOpened.QuoteNumber</h2>
+
+        <a class="btn btn-outline-secondary" asp-controller="Quote" asp-action="Index">
+            &larr; Back to Quotes
+        </a>
+    </div>
+
+    <!-- ===================== -->
+    <!-- Quote Details -->
+    <!-- ===================== -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Quote Details
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <strong>Quote Number:</strong><br />
+                    @Model.quoteOpened.QuoteNumber
+                </div>
+
+                <div class="col-md-3">
+                    <strong>Customer:</strong><br />
+                    @Model.quoteOpened.CustomerId - @Model.quoteOpened.CustomerName
+                </div>
+
+                <div class="col-md-3">
+                    <strong>Address:</strong><br />
+                    @Model.quoteOpened.Address
+                </div>
+
+                <div class="col-md-3">
+                    <strong>External Order #:</strong><br />
+                    @Model.quoteOpened.ExternalOrderNumber
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== -->
+    <!-- Quote Lines Table -->
+    <!-- ===================== -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            Quote Lines
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-bordered table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Item</th>
+                        <th style="width: 130px;">Unit</th>
+                        <th style="width: 130px;">Qty on Hand</th>
+                        <th style="width: 130px;">Quantity</th>
+                        <th style="width: 130px;">Base Qty</th>
+                        <th style="width: 160px;">Price</th>
+                        <th style="width: 140px;">Discount</th>
+                        <th style="width: 150px;">Subtotal</th>
+                        <th style="width: 150px;">Total (incl. VAT)</th>
+                        <th style="width: 160px;">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="quoteLinesBody">
+                    @foreach (var line in Model.quoteLines)
+                    {
+                        <tr data-key="@line.Key" data-item="@line.ItemId">
+
+                            <td>
+                                <select class="form-select itemId"></select>
+                            </td>
+
+                            <td>
+                                <select class="form-select unit">
+                                    @foreach (var u in units.Append(line.Unit).Where(u => !string.IsNullOrWhiteSpace(u)).Distinct())
+                                    {
+                                        <option value="@u" selected="@(u == line.Unit)">@u</option>
+                                    }
+                                </select>
+                            </td>
+
+                            <td>
+                                <input class="form-control bg-body-secondary quantityOnHand" readonly />
+                            </td>
+
+                            <td>
+                                <input class="form-control quantity" type="number" min="0" step="0.01"
+                                       value="@line.UnitQuantity.ToString("F2", CultureInfo.InvariantCulture)" />
+                            </td>
+
+                            <td>
+                                <input class="form-control bg-body-secondary baseQuantity" readonly
+                                       value="@line.Quantity.ToString("F2", CultureInfo.InvariantCulture)" />
+                            </td>
+
+                            <td>
+                                <input class="form-control bg-body-secondary unitPrice" type="number" readonly
+                                       value="@line.UnitPrice.ToString("F2", CultureInfo.InvariantCulture)" />
+                            </td>
+
+                            <td>
+                                <input class="form-control discountPercent" type="number" min="0" step="0.01"
+                                       value="@line.DiscountPercent.ToString("F2", CultureInfo.InvariantCulture)" />
+                            </td>
+
+                            <td>
+                                <input class="form-control subtotal" disabled />
+                            </td>
+
+                            <td>
+                                <input class="form-control total" disabled />
+                            </td>
+
+                            <td>
+                                <button class="btn btn-sm btn-success" onclick="updateLine(this)">Save</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteLine(this)">Delete</button>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="8" class="text-end fw-bold align-middle">Total (Gross amount)</td>
+                        <td class="fw-bold align-middle" id="grossTotal"></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+    const VAT_RATE = @vatRate;
+
+    let items = [];
+
+    // Display only - Sage works out the real tax and never receives these figures.
+    function recalcRow(row) {
+        const quantity = parseFloat(row.querySelector(".quantity").value) || 0;
+        const price = parseFloat(row.querySelector(".unitPrice").value) || 0;
+
+        const subtotal = quantity * price;
+
+        row.querySelector(".subtotal").value = subtotal.toFixed(2);
+        row.querySelector(".total").value = (subtotal * (1 + VAT_RATE / 100)).toFixed(2);
+
+        recalcTotals();
+    }
+
+    function recalcTotals() {
+        let gross = 0;
+
+        document.querySelectorAll("#quoteLinesBody .total").forEach(input => {
+            gross += parseFloat(input.value) || 0;
+        });
+
+        document.getElementById("grossTotal").textContent = gross.toFixed(2);
+    }
+
+    function applyItem(row) {
+        const selected = items.find(i => i.id === row.querySelector(".itemId").value);
+        const onHand = selected?.quantityOnHand ?? 0;
+
+        row.querySelector(".quantityOnHand").value = selected ? onHand.toFixed(2) : "";
+        row.querySelector(".quantity").max = onHand;
+    }
+
+    $(document).ready(function () {
+        document.querySelectorAll("#quoteLinesBody tr").forEach(row => {
+            recalcRow(row);
+
+            row.querySelectorAll(".quantity, .unitPrice")
+               .forEach(input => input.addEventListener("input", () => recalcRow(row)));
+        });
+
+        fetch("/Lookup")
+            .then(async res => {
+                if (!res.ok) throw new Error(await res.text());
+                return res.json();
+            })
+            .then(data => {
+                items = data.items;
+
+                const itemOptions = items.map(i => ({ id: i.id, text: `${i.id} - ${i.name ?? ""}` }));
+
+                document.querySelectorAll("#quoteLinesBody tr").forEach(row => {
+                    $(row).find(".itemId").select2({
+                        theme: "bootstrap-5",
+                        placeholder: "Search for an item",
+                        data: itemOptions,
+                        width: "100%"
+                    });
+
+                    $(row).find(".itemId").val(row.dataset.item).trigger("change");
+
+                    $(row).find(".itemId").on("change", () => applyItem(row));
+
+                    applyItem(row);
+                });
+            })
+            .catch(err => alert("Could not load items: " + err.message));
+    });
+
+    function getLineData(btn) {
+        const row = btn.closest("tr");
+
+        return {
+            key: row.dataset.key,
+            quoteKey: document.getElementById("quoteKey").value,
+            itemId: (row.querySelector(".itemId").value ?? "").trim(),
+            unit: row.querySelector(".unit").value.trim(),
+            unitQuantity: parseFloat(row.querySelector(".quantity").value),
+            quantityOnHand: parseFloat(row.querySelector(".quantityOnHand").value) || 0,
+            discountPercent: parseFloat(row.querySelector(".discountPercent").value) || 0
+        };
+    }
+
+    function setBusy(btn, busy) {
+        if (busy) {
+            btn.dataset.label = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+        }
+        else {
+            btn.disabled = false;
+            btn.innerHTML = btn.dataset.label;
+        }
+    }
+
+    function updateLine(btn) {
+        const data = getLineData(btn);
+
+        if (!data.itemId) { alert("This line needs an Item."); return; }
+        if (!data.unitQuantity || data.unitQuantity <= 0) { alert("This line needs a quantity greater than 0."); return; }
+
+        if (data.unitQuantity > data.quantityOnHand) {
+            alert(`Item ${data.itemId} has only ${data.quantityOnHand} on hand - reduce the quantity to ${data.quantityOnHand} or less.`);
+            return;
+        }
+
+        setBusy(btn, true);
+
+        fetch("/QuoteLine", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(async res => {
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(`Update failed (${res.status}): ${msg}`);
+            }
+
+            location.reload();
+        })
+        .catch(err => {
+            alert(err.message);
+            setBusy(btn, false);
+        });
+    }
+
+    function deleteLine(btn) {
+        const row = btn.closest("tr");
+        const lineKey = row.dataset.key;
+        const quoteKey = document.getElementById("quoteKey").value;
+
+        if (!confirm("Are you sure you want to delete this line in Sage Intacct?")) return;
+
+        setBusy(btn, true);
+
+        fetch(`/QuoteLine/${encodeURIComponent(quoteKey)}/${encodeURIComponent(lineKey)}`, {
+            method: "DELETE"
+        })
+        .then(async res => {
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(`Delete failed (${res.status}): ${msg}`);
+            }
+
+            location.reload();
+        })
+        .catch(err => {
+            alert(err.message);
+            setBusy(btn, false);
+        });
+    }
+
+
+</script>
+}

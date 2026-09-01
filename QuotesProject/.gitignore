@@ -1,0 +1,13 @@
+## Visual Studio / .NET build artifacts
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+## OS
+Thumbs.db
+.DS_Store
+
+# Local secrets - never commit
+appsettings.json
