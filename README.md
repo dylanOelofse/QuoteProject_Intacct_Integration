@@ -1,32 +1,15 @@
 # Sage Intacct REST Integration — Quotes Manager
 
-An ASP.NET Core MVC app for managing **Sales Quotations in Sage Intacct** through the Sage Intacct
-REST API. The endpoint calls and the OAuth2 token call are yours to build.
+An ASP.NET Core MVC app (.NET 10) for managing **Sales Quotations in Sage Intacct** through the
+Sage Intacct REST API. View, create, update and delete quotes and their lines.
 
-Everything else is intacct and compiles: controllers, services (validation + mapping), models,
-request/response DTOs and all the views.
+Quotes are Order Entry documents whose type is the company's quote *transaction definition* —
+`18-Sales Quotation` here. The type is part of the URL after `::` and needs `Uri.EscapeDataString`
+because it contains a space.
 
 ---
 
-## 1. What's already done vs. what you build
-
-| | State |
-|---|---|
-| `Api/QuotesApiEngine.cs` | **Stubs.** Eight methods, each `throw new NotImplementedException()`. ← build the endpoint calls here |
-| `Api/AuthEngine.cs` | **Stub.** Reads the credentials from config; `GetAccessTokenAsync()` throws. ← build the token call here |
-| `Services/QuoteApiService.cs` | Done — validation, `Quote` ↔ `CreateQuoteRequest` mapping, date/decimal formatting |
-| `Services/QuoteLineApiService.cs` | Done — same for lines |
-| `Controllers/` | Done — routes, model binding, status-code mapping |
-| `Models/`, `Requests/`, `Responses/` | Done — the anti-corruption layer around Intacct's JSON |
-| `Views/` | Done — quotes list, create page, quote-lines page |
-
-The app builds and runs right now; any page that hits Intacct will throw
-`NotImplementedException` until the engines are filled in.
-
-## 2. Layering
-
-The interfaces (`IQuoteApiService` / `IQuoteLineApiService`) are gone — controllers depend on the
-concrete service. One service sits between the controller and the engine, nothing more:
+## 1. Layering
 
 ```
 Browser JS (fetch)  →  QuoteController  →  QuoteApiService  →  QuotesApiEngine  →  Sage Intacct
@@ -37,26 +20,47 @@ Browser JS (fetch)  →  QuoteController  →  QuoteApiService  →  QuotesApiEn
 ```
 
 `QuotesApiEngine` is the only class that talks HTTP to the API; `AuthEngine` is the only class that
-knows how to get a token. Neither is registered with a `BaseAddress`, and no endpoint URLs live in
+knows how to get a token. Neither is registered with a `BaseAddress` and no endpoint URLs live in
 config — **the engines own their URLs**.
 
-## 3. Settings
+| | Role |
+|---|---|
+| `Api/AuthEngine.cs` | OAuth2 token: fetch, cache, refresh |
+| `Api/QuotesApiEngine.cs` | Every HTTP call to Intacct (6 methods) |
+| `Services/` | Validation, `Quote` ↔ request/response mapping, date and decimal formatting |
+| `Services/LookupStore.cs` | Customers and items, loaded once at startup |
+| `Controllers/` | Routes, model binding, status-code mapping |
+| `Models/`, `Requests/`, `Responses/` | The anti-corruption layer around Intacct's JSON |
+| `Views/` | Quotes list, create page, quote-lines page |
 
-Credentials only. `QuotesProject/QuotesProject/appsettings.json`:
+## 2. Settings
+
+`appsettings.json` is **gitignored** — it holds live credentials and is not in the repo. Create it
+at `QuotesProject/QuotesProject/appsettings.json`:
 
 ```jsonc
-"ApiSettings": {
-  "GrantType": "client_credentials",
-  "ClientId": "",
-  "ClientSecret": "",
-  "Username": ""
+{
+  "ApiSettings": {
+    "GrantType":    "client_credentials",
+    "ClientId":     "",
+    "ClientSecret": "",
+    "Username":     "",
+
+    // Sent as the X-IA-API-Param-Entity header on every data call.
+    "Entity":    "18. EfektoCare_SA",
+
+    // Required on every quote line by the create schema, not collected by the UI.
+    "Location":  "18. EfektoCare_SA",
+    "Warehouse": "11ISADistStorage"
+  },
+
+  // Display only. Subtotal/Total are worked out in the browser; Sage calculates the real tax.
+  "VatRate": 15
 }
 ```
 
-Fill in `ClientId`, `ClientSecret` and `Username`. `AuthEngine` throws at construction if any of the
-four values is missing.
-
-For real credentials prefer user secrets over the file, so they never reach source control:
+`AuthEngine` throws at construction if any credential is missing. For real credentials prefer user
+secrets over the file, so they can never reach source control even by accident:
 
 ```bash
 cd "QuotesProject/QuotesProject"
@@ -64,9 +68,7 @@ dotnet user-secrets init
 dotnet user-secrets set "ApiSettings:ClientSecret" "..."
 ```
 
-## 4. The token call to build
-
-From the Postman request:
+## 3. Auth
 
 ```http
 POST https://api.intacct.com/ia/api/v1/oauth2/token
@@ -75,106 +77,111 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=client_credentials&client_id=...&client_secret=...&username=...
 ```
 
-`FormUrlEncodedContent` produces that body. The response includes the token and its lifetime, so
-caching it in `AuthEngine` and refreshing shortly before expiry beats fetching one per API call —
-but note `AddHttpClient<T>` registers the engine as *transient*, so a cached field dies with the
-instance; see the lifetime note in `Program.cs`.
+Form-encoded, not JSON — `Dictionary<string,string>` into `FormUrlEncodedContent`, sent with
+`PostAsync`. `AuthEngine` is registered as a **singleton** so the cached token survives between
+requests, and takes its `HttpClient` from a named `IHttpClientFactory` client rather than
+`AddHttpClient<T>` (which would register it transient and throw the cache away every call).
 
-## 5. Reference: the API this app was written against
+`GetValidTokenAsync()` is the only method callers need. It returns the cached token, and on expiry
+refreshes under a `SemaphoreSlim` with a double-check so concurrent requests fetch one token, not
+five. Expiry is stored 300s early. A `refresh_token` grant is tried first and falls back to a full
+`client_credentials` fetch.
 
-The sections below are notes from the original working integration — the endpoints, the payload
-shapes and the traps. They are reference material, not a spec you have to follow.
+## 4. Endpoints used
 
-### 5.1 The endpoints
+| Purpose | Call |
+|---|---|
+| Quotes list | `POST /services/core/query` on `order-entry/document` |
+| Quote lines | `POST /services/core/query` on `order-entry/document-line` |
+| Customers | `POST /services/core/query` on `accounts-receivable/customer` |
+| Items + stock | `POST /services/core/query` on `inventory-control/item-warehouse-inventory` |
+| Create quote | `POST /objects/order-entry/document::18-Sales%20Quotation` |
+| Everything else | `PATCH /objects/order-entry/document::18-Sales%20Quotation/{key}` |
 
-Quotes are **Order Entry documents** whose type is your company's quote *transaction definition* —
-`18-Sales Quotation` in this company. The type is part of the URL after `::` and needs
-`Uri.EscapeDataString` (it contains a space).
-
-| Purpose | Call | Engine method |
-|---|---|---|
-| List/search quotes | `POST /services/core/query` — body picks `object`, `fields`, `filters`, `orderBy` | `QueryQuotesAsync` |
-| Read one quote + lines | `GET /objects/order-entry/document::18-Sales%20Quotation/{key}` | `GetQuoteByKeyAsync` |
-| Create quote | `POST /objects/order-entry/document::18-Sales%20Quotation` | `CreateQuoteAsync` |
-| Update quote header | `PATCH /objects/order-entry/document::18-Sales%20Quotation/{key}` | `UpdateQuoteAsync` |
-| Delete quote | `DELETE /objects/order-entry/document::18-Sales%20Quotation/{key}` | `DeleteQuoteAsync` |
-| Add line to existing quote | `POST /objects/order-entry/document-line::18-Sales%20Quotation` — body includes `documentHeader.key` | `CreateQuoteLineAsync` |
-| Update one line | `PATCH /objects/order-entry/document-line::18-Sales%20Quotation/{lineKey}` | `UpdateQuoteLineAsync` |
-| Delete one line | `DELETE /objects/order-entry/document-line::18-Sales%20Quotation/{lineKey}` | `DeleteQuoteLineAsync` |
-
-**Lines have their own endpoints.** Document lines are *owned objects* of the document, but Intacct
-still exposes them as a standalone resource (`order-entry/document-line`) with the same
-`::{documentType}` URL pattern — which is what lets the quote-lines page add/save/delete one line
-per request. A new line attaches to its parent via `"documentHeader": { "key": "<quote key>" }`.
-Reading lines needs no extra call: the GET on the document already embeds the full `lines` array.
-
-**Why the query service for the list?** There is a plain list endpoint
-(`GET /objects/order-entry/document`), but it returns only `key`/`id`/`href` per row — one extra GET
-per quote to fill the table (N+1). The query service returns exactly the columns you ask for in one
-call and lets you filter to just quotes (`documentType = 18-Sales Quotation`), which matters because
-`order-entry/document` holds *all* document types (orders, invoices, shippers...).
+**One PATCH does four jobs.** Updating the header, updating a line, deleting a line and deleting a
+quote all go through the same document PATCH. There is no `DELETE` and no `document-line` write
+anywhere in the engine — see §5 for why.
 
 Create body essentials:
 
 ```json
 POST /objects/order-entry/document::18-Sales Quotation
 {
-  "customer":  { "id": "CUST-00042" },
-  "txnDate":   "2026-07-16",              // REQUIRED
-  "state":     "draft",                   // draft | pending | submitted (default pending)
-  "lines": [                              // at least one line
+  "customer": { "id": "SAC2059" },
+  "txnDate":  "2026-07-16",
+  "state":    "pending",
+  "lines": [
     {
-      "dimensions":   { "item": { "id": "ITEM-001" }, "location": { "id": "1" } },
-      "unit":         "Each",             // REQUIRED
-      "unitQuantity": "5",                // REQUIRED (string!)
-      "unitPrice":    "650.00"            // REQUIRED (string!)
+      "dimensions":   { "item":      { "id": "35139" },
+                        "warehouse": { "id": "11ISADistStorage" },
+                        "location":  { "id": "18. EfektoCare_SA" } },
+      "unit":         "06Pk",
+      "unitQuantity": "10"
     }
   ]
 }
 ```
 
 `201 Created` returns **only a reference** — `{ "key", "id", "documentType", "href" }` inside
-`ia::result`. That is why `QuoteApiService.CreateQuoteAsync` GETs the document straight back: the
-quote number is generated inside Sage.
+`ia::result`. The quote number is generated inside Sage, so the list is re-queried to pick it up.
 
-### 5.2 Things the engine has to get right
+## 5. Things learned the hard way
 
-- **Every response is wrapped in an envelope**: `{ "ia::result": ..., "ia::meta": ... }` →
-  deserialize into `IntacctResponse<T>` (`ia::result` isn't a legal C# name, hence
-  `[JsonPropertyName]`).
-- **JSON options**: camelCase when writing, case-insensitive when reading, and
-  `DefaultIgnoreCondition.WhenWritingNull`. PATCH *depends* on that last one — a null property is
-  omitted from the body and Intacct leaves the field untouched.
-- **Numbers and dates travel as strings**: `"unitPrice": "650.00"`, `"txnDate": "2024-11-01"`.
-  The services already parse and format these in invariant culture — `"1250.50"`, never `1250,5`.
-- **Query rows are flat**: asking for `customer.name` returns a JSON key literally called
-  `"customer.name"` → see `QuoteQueryResponse`.
-- **Surface the error body.** On a non-success status, read the response content into the exception
-  message and throw `HttpRequestException` with the `StatusCode` set — the controllers switch on
-  `HttpStatusCode.NotFound` / `BadRequest`, and the views show the message in an alert.
+- **Lines cannot be written through `order-entry/document-line`.** They are edited as a `lines`
+  array inside a document PATCH. Deleting one is `{"key": "...", "ia::operation": "delete"}`.
+- **A smart rule blocks every PATCH** (`CUSTOMER_UDF`, `BL04002055`) unless the body carries
+  `"nsp::CUSTOMER_UDFS": true`. It is on `UpdateQuoteRequest` for exactly this reason.
+- **A Delete Policy on the transaction definition blocks `DELETE`** (`INV-1372`). Deleting a quote
+  is therefore a soft delete — PATCH `status` to `inactive`, and the list filters on `active`.
+- **`item` is read-only on a line update** (`REST-1050`). Change the item via `dimensions.item`,
+  which needs only `item` — no warehouse or location, unlike create.
+- **Dot notation traverses many-to-one only.** `lines.item.id` and `warehouseInfo.warehouse.id`
+  both fail with `REST-1107` because they cross an array. Query the child object directly instead.
+- **Filters are stricter than fields.** A field can be valid in `"fields"` and still be rejected in
+  `"filters"` — `documentHeader.documentType` is the one that bites.
+- **Quantity comes in two flavours**: `unitQuantity` is packs (what the user types),
+  `quantity` is base units. Sending 10 × `06Pk` stores `unitQuantity: 10`, `quantity: 60`.
+- **So does price**: `unitPrice` is per unit-of-measure and matches Intacct's Price column;
+  `price` is per base unit. Both arrive **already net of the discount**, so applying the
+  discount again double-counts it.
+- **`ia::meta.next` is a number, not a string** — typing it as `string?` throws on page 2 of any
+  paged result.
+- **`Authorization` is single-value.** `DefaultRequestHeaders.Add` appends rather than replaces, so
+  a paging loop that adds per page throws a `FormatException` on the second iteration. Set it once
+  above the loop.
+- **Item stock is warehouse-scoped.** Querying `inventory-control/item-warehouse-inventory` filtered
+  on `warehouse.id` is what makes on-hand figures match what Intacct shows on the document.
 
-## 6. Run it
+## 6. Startup lookups
+
+Customers and items change rarely and are needed on every page, so `LookupLoaderService`
+(a `BackgroundService`) loads them once into the singleton `LookupStore` at startup. Pages read
+them from `/Lookup`; the quotes list has a **Refresh** button that re-runs the load. This keeps
+the app to a handful of API calls a day rather than several per page view.
+
+## 7. Run it
 
 ```bash
 cd "QuotesProject/QuotesProject"
-dotnet run
+dotnet run --launch-profile https
 ```
 
-Browse to the URL it prints (e.g. `https://localhost:7216`) → you land on the quotes list.
+Use the **https** profile — `UseHttpsRedirection` 307s to the https port, so the http profile
+lands on a port with nothing bound.
 
-- **Quotes list** (`/Quote`) — edit Reference/Dates inline → **Save** (PATCH), **Delete**,
-  **View** → the quote-lines page.
-- **+ Create New Quote** → `/Quote/Create` — header fields + line grid → success popup shows the
-  Sage-generated quote number → back to the list.
-- **Quote lines** (`/QuoteLine?quoteKey=...`) — quote details card, "Create Quote Line" card, and an
-  editable lines table with per-row **Save** and **Delete**.
+- **Quotes list** (`/Quote`) — edit dates and External Order # inline → **Save**, **Delete**,
+  **View**. **Refresh** re-pulls customers and items.
+- **+ New Quote** (`/Quote/Create`) — header fields and a line grid.
+- **Quote lines** (`/QuoteLine?quoteKey=...`) — editable item, unit, quantity and discount, with
+  read-only price, stock and totals.
 
-## 7. Gotchas
+## 8. Gotchas
 
-- **401 / `GW-0031 Invalid token`** → the token is expired or was never fetched.
-- **Only draft/pending documents** can be edited or deleted; a converted quote refuses with a 400.
-- **Location/Warehouse** on lines are optional here, but some company configurations (multi-entity,
-  inventory-tracked items) require them — if Intacct rejects a create, its error message names the
-  missing field.
-- If a query 400s on a field name, drop that field from `QueryQuotesAsync` — field names can be
-  verified in Postman by adding them to `"fields"` one at a time.
+- **401 / `GW-0031 Invalid token`** → expired or never fetched.
+- **`REST-1030 malformed JSON`** → usually a trailing comma left behind after editing one of the
+  hardcoded query bodies.
+- **`INV-1359 Missing unit`** → the unit is not in that item's unit-of-measure group. Units are not
+  interchangeable between items; `Each` is not universally valid.
+- **Only pending/active documents** can be edited; a converted quote refuses with a 400.
+- If a query 400s on a field name, drop that field — names can be verified in Postman by adding
+  them to `"fields"` one at a time.
