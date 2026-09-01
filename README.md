@@ -1,10 +1,9 @@
-# Sage Intacct REST Integration — Quotes Manager (scaffold)
+# Sage Intacct REST Integration — Quotes Manager
 
 An ASP.NET Core MVC app for managing **Sales Quotations in Sage Intacct** through the Sage Intacct
-REST API (v1). This is a copy of the *Direct Intacct integration* project with the two HTTP-facing
-engines **emptied out** — the endpoint calls and the OAuth2 token call are yours to build.
+REST API. The endpoint calls and the OAuth2 token call are yours to build.
 
-Everything else is intact and compiles: controllers, services (validation + mapping), models,
+Everything else is intacct and compiles: controllers, services (validation + mapping), models,
 request/response DTOs and all the views.
 
 ---
