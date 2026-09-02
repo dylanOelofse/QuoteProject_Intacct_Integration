@@ -12,7 +12,7 @@ namespace QuotesProject.Requests
 
         public string? CustomerPONumber { get; set; }
 
-        public string? Status { get; set; }
+        public string? State { get; set; }
 
         [JsonPropertyName("nsp::CUSTOMER_UDFS")]
         public bool CustomerUdfs { get; set; } = true;

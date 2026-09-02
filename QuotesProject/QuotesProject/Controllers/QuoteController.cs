@@ -63,8 +63,6 @@ namespace QuotesProject.Controllers
             }
         }
 
-
-
         [HttpPut]
         public async Task<IActionResult> UpdateQuote(Quote quote)
         {

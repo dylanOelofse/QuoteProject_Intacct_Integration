@@ -4,8 +4,6 @@ namespace QuotesProject.Requests
 {
     public class UpdateQuoteLineRequest
     {
-        // Null on a NEW line. Presence of a key is what tells Intacct to update or
-        // delete an existing line rather than add one.
         public string? Key { get; set; }
 
         public DimensionsRequest? Dimensions { get; set; }

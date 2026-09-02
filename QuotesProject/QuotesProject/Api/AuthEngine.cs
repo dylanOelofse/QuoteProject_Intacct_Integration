@@ -14,9 +14,6 @@ namespace QuotesProject.Api
         private string? _accessToken;
         private DateTime _expiresAt;
 
-        // Serialises refreshes. Two concurrent requests can both find an expired token;
-        // Intacct rotates the refresh token on use, so the second POST would arrive with
-        // one that has already been spent and fail.
         private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
         public string? RefreshToken { get; set; }
@@ -30,12 +27,6 @@ namespace QuotesProject.Api
             _username = configuration["ApiSettings:Username"] ?? throw new InvalidOperationException("ApiSettings:Username is not configured.");
         }
 
-        /// <summary>
-        /// The only method callers need. Returns the cached token while it is still good,
-        /// otherwise refreshes it. Checked lazily before each API call rather than on a
-        /// timer - a timer would need a hosted service and would keep refreshing while
-        /// nobody is using the app.
-        /// </summary>
         public async Task<string> GetValidTokenAsync()
         {
             if (_accessToken != null && DateTime.Now < _expiresAt)
@@ -44,12 +35,11 @@ namespace QuotesProject.Api
             await _refreshLock.WaitAsync();
             try
             {
-                // Re-check inside the lock: another request may have refreshed while we waited.
                 if (_accessToken != null && DateTime.Now < _expiresAt)
                     return _accessToken;
 
                 if (string.IsNullOrEmpty(RefreshToken))
-                    return await GetAccessTokenAsync();      // first call of the process
+                    return await GetAccessTokenAsync();  
 
                 try
                 {
@@ -57,7 +47,7 @@ namespace QuotesProject.Api
                 }
                 catch (HttpRequestException)
                 {
-                    // The refresh token itself expires (90 days), and Intacct can revoke it.
+                    // Refresh token expires (90 days), and Intacct can revoke it.
                     // Fall back to the full credential grant instead of dying.
                     return await GetAccessTokenAsync();
                 }

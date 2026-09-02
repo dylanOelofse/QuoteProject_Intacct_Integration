@@ -127,9 +127,7 @@ namespace QuotesProject.Services
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException("A valid quote key is required.");
 
-            // Soft delete, quote stays in Sage but drops out of the list
-            // QueryQuotesAsync filters on status = "active".
-            var request = new UpdateQuoteRequest { Status = "inactive" };
+            var request = new UpdateQuoteRequest { State = "closed" };
 
             await _engine.UpdateQuoteAsync(key, request);
         }

@@ -250,7 +250,6 @@
             lines: collectLines()
         };
 
-        // Client-side sanity checks (the service validates again on the server).
         if (!quote.customerId) { alert("Customer ID is required."); return; }
         if (!quote.transactionDate) { alert("Quote date is required."); return; }
 

@@ -54,9 +54,6 @@ namespace QuotesProject.Services
             return quote;
         }
 
-        // Lines are edited through the DOCUMENT endpoint, not the line endpoint. A PATCH
-        // on order-entry/document-line rewrites the parent anyway and trips the
-        // CUSTOMER_UDF smart rule, which can only be satisfied from the document body.
         public async Task UpdateQuoteLineAsync(QuoteLine line)
         {
             if (line == null)
@@ -81,9 +78,6 @@ namespace QuotesProject.Services
                     new UpdateQuoteLineRequest
                     {
                         Key = line.Key,
-                        // dimensions.item, not item - the line-level item is read-only
-                        // on update (REST-1050). Warehouse and location are not required
-                        // here, unlike on create.
                         Dimensions = new DimensionsRequest
                         {
                             Item = new ObjectRefRequest { Id = line.ItemId }
@@ -94,6 +88,22 @@ namespace QuotesProject.Services
                     }
                 }
             };
+
+            //e.g
+            //{
+            //  "nsp::CUSTOMER_UDFS": true,
+            //  "lines": [
+            //    {
+            //      "key": "1580046",
+            //      "dimensions": {
+            //          "item": { "id": "30444" }
+            //      },
+            //      "unit": "Pack",
+            //      "unitQuantity": "3",
+            //      "discountPercent": "5"
+            //    }
+            //  ]
+            //}
 
             await _engine.UpdateQuoteAsync(line.QuoteKey, request);
         }

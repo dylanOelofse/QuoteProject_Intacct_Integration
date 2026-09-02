@@ -6,7 +6,6 @@ namespace QuotesProject.Responses
     {
         public string? Key { get; set; }
 
-        /// <summary>Bare item code, e.g. "20523". The document GET returns the composite "20523--HORMOBAN APM 100ML".</summary>
         [JsonPropertyName("item.id")]
         public string? ItemId { get; set; }
 

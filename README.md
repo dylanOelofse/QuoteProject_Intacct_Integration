@@ -132,7 +132,12 @@ POST /objects/order-entry/document::18-Sales Quotation
 - **A smart rule blocks every PATCH** (`CUSTOMER_UDF`, `BL04002055`) unless the body carries
   `"nsp::CUSTOMER_UDFS": true`. It is on `UpdateQuoteRequest` for exactly this reason.
 - **A Delete Policy on the transaction definition blocks `DELETE`** (`INV-1372`). Deleting a quote
-  is therefore a soft delete — PATCH `status` to `inactive`, and the list filters on `active`.
+  is therefore a soft delete — PATCH `state` to `closed`, which drops it out of the list's
+  `state = pending` filter.
+- **`status` is not writable on a document.** PATCHing `"status": "inactive"` returns `200` with
+  `"totalSuccess": 1` and changes nothing. Note what that means generally: a 2xx and a
+  `totalSuccess` count confirm Sage *processed* the request, not that it *applied* your field.
+  Verify writes by re-querying, not by trusting the status code.
 - **`item` is read-only on a line update** (`REST-1050`). Change the item via `dimensions.item`,
   which needs only `item` — no warehouse or location, unlike create.
 - **Dot notation traverses many-to-one only.** `lines.item.id` and `warehouseInfo.warehouse.id`

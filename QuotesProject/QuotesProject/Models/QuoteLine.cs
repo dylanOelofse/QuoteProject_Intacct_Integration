@@ -17,6 +17,7 @@ namespace QuotesProject.Models
         public decimal Quantity { get; set; }
 
         public decimal UnitQuantity { get; set; }
+
         public decimal UnitPrice { get; set; }
 
         public decimal DiscountPercent { get; set; }
